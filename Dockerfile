@@ -25,14 +25,17 @@ RUN mkdir -p /usr/share/keyrings \
     && echo "deb [signed-by=/usr/share/keyrings/adoptium.asc] https://packages.adoptium.net/artifactory/deb focal main" | tee /etc/apt/sources.list.d/adoptium.list \
     && apt-get update && apt-get install -y temurin-21-jdk
 
-
 # Install code-server (VS Code for the browser)
 RUN curl -fsSL https://code-server.dev/install.sh | sh
 
-# Install extensions one at a time
+# Download and install Datapack Helper Plus extension manually
+RUN wget https://github.com/SPYGlassMC/Datapack-Helper-Plus/releases/latest/download/datapack-helper-plus.vsix -O /tmp/datapack-helper-plus.vsix \
+    && code-server --install-extension /tmp/datapack-helper-plus.vsix \
+    && rm /tmp/datapack-helper-plus.vsix
+
+# Install other VS Code extensions
 RUN code-server --install-extension GitHub.vscode-pull-request-github \
     && code-server --install-extension eamodio.gitlens \
-    && code-server --install-extension SpyglassMC.Datapack-Helper-Plus \
     && code-server --install-extension SPGoding.syntax-mcfunction \
     && code-server --install-extension redhat.java \
     && code-server --install-extension vscjava.vscode-java-debug \
