@@ -29,7 +29,7 @@ RUN mkdir -p /usr/share/keyrings \
 # Install code-server (VS Code for the browser)
 RUN curl -fsSL https://code-server.dev/install.sh | sh
 
-# Install VS Code extensions
+# Install extensions one at a time
 RUN code-server --install-extension GitHub.vscode-pull-request-github \
     && code-server --install-extension eamodio.gitlens \
     && code-server --install-extension SpyglassMC.Datapack-Helper-Plus \
