@@ -28,13 +28,12 @@ RUN mkdir -p /usr/share/keyrings \
 # Install code-server (VS Code for the browser)
 RUN curl -fsSL https://code-server.dev/install.sh | sh
 
-# Download and install Datapack Helper Plus extension manually
-RUN curl -s https://api.github.com/repos/SPYGlassMC/Datapack-Helper-Plus/releases/latest \
-    | grep browser_download_url \
-    | cut -d '"' -f 4 \
-    | wget -i - -O /tmp/datapack-helper-plus.vsix \
+# Fetch the latest release URL and download Datapack Helper Plus extension manually
+RUN LATEST_RELEASE_URL=$(curl -s https://api.github.com/repos/SPYGlassMC/Datapack-Helper-Plus/releases/latest | grep browser_download_url | cut -d '"' -f 4) \
+    && wget -O /tmp/datapack-helper-plus.vsix "$LATEST_RELEASE_URL" \
     && code-server --install-extension /tmp/datapack-helper-plus.vsix \
     && rm /tmp/datapack-helper-plus.vsix
+
 
 
 # Install other VS Code extensions
