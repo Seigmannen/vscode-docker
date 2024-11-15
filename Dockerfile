@@ -28,18 +28,11 @@ RUN mkdir -p /usr/share/keyrings \
 # Install code-server (VS Code for the browser)
 RUN curl -fsSL https://code-server.dev/install.sh | sh
 
-# Fetch the latest release URL and download Datapack Helper Plus extension manually
-RUN LATEST_RELEASE_URL=$(curl -s https://api.github.com/repos/SPYGlassMC/Datapack-Helper-Plus/releases/latest | grep browser_download_url | cut -d '"' -f 4) \
-    && wget -O /tmp/datapack-helper-plus.vsix "$LATEST_RELEASE_URL" \
-    && code-server --install-extension /tmp/datapack-helper-plus.vsix \
-    && rm /tmp/datapack-helper-plus.vsix
-
-
-
-# Install other VS Code extensions
-RUN code-server --install-extension GitHub.vscode-pull-request-github \
-    && code-server --install-extension eamodio.gitlens \
+# Install Datapack Language Server and other VS Code extensions
+RUN code-server --install-extension SPGoding.datapack-language-server \
     && code-server --install-extension SPGoding.syntax-mcfunction \
+    && code-server --install-extension GitHub.vscode-pull-request-github \
+    && code-server --install-extension eamodio.gitlens \
     && code-server --install-extension redhat.java \
     && code-server --install-extension vscjava.vscode-java-debug \
     && code-server --install-extension alefragnani.project-manager \
@@ -47,6 +40,7 @@ RUN code-server --install-extension GitHub.vscode-pull-request-github \
     && code-server --install-extension CoenraadS.bracket-pair-colorizer-2 \
     && code-server --install-extension mhutchie.git-graph \
     && code-server --install-extension richardwillis.vscode-gradle
+
 
 # Set up default code-server configuration
 RUN mkdir -p ~/.config/code-server && \
