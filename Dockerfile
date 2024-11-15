@@ -30,7 +30,6 @@ RUN curl -fsSL https://code-server.dev/install.sh | sh
 
 # Install Datapack Language Server and other VS Code extensions
 RUN code-server --install-extension SPGoding.datapack-language-server \
-    && code-server --install-extension SPGoding.syntax-mcfunction \
     && code-server --install-extension GitHub.vscode-pull-request-github \
     && code-server --install-extension eamodio.gitlens \
     && code-server --install-extension redhat.java \
@@ -40,6 +39,7 @@ RUN code-server --install-extension SPGoding.datapack-language-server \
     && code-server --install-extension CoenraadS.bracket-pair-colorizer-2 \
     && code-server --install-extension mhutchie.git-graph \
     && code-server --install-extension richardwillis.vscode-gradle
+
 
 
 # Set up default code-server configuration
