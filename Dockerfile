@@ -40,7 +40,8 @@ RUN code-server --install-extension SPGoding.datapack-language-server \
     && code-server --install-extension mhutchie.git-graph \
     && code-server --install-extension richardwillis.vscode-gradle
 
-
+# Set a password for code-server
+ENV PASSWORD="1234abcd"
 
 # Set up default code-server configuration
 RUN mkdir -p ~/.config/code-server && \
